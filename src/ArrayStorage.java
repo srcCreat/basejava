@@ -31,17 +31,15 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        Resume result = null;
         for (Resume aStorage : storage) {
             if (aStorage == null) {
                 System.out.println("Извините, указаный UUID: " + uuid + "не найден");
                 break;
             } else if (aStorage.uuid.equals(uuid)) {
-                result = aStorage;
-                break;
+                return aStorage;
             }
         }
-        return result;
+        return null;
     }
 
     void delete(String uuid) {
@@ -80,6 +78,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        return storage.length;
+        return getAll().length;
     }
 }
