@@ -20,80 +20,44 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         //TODO check to repeat
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(r.getUuid())) {
-                System.out.println("Такое резюме уже существует");
-                return;
-            }
-        }
-
-        if (size >= storage.length) {
+        if (getIndex(r.getUuid()) != -1) {
+            System.out.println("Резюме " + r.getUuid() + " уже существует");
+        } else if (size == storage.length) {
             System.out.println("Место хранения переполнено!");
-        }
-
-        //TODO save resume
-        if (size == 0) {
-            storage[0] = r;
-            size++;
         } else {
-            for (int i = 1; i < storage.length; i++) {
-                if (storage[i] == null) {
-                    storage[i] = r;
-                    size++;
-                    break;
-                }
-            }
+            storage[size] = r;
+            size++;
         }
     }
 
     public void update(Resume r) {
         //TODO check for availability
-        boolean isAvailable = false;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].equals(r)) isAvailable = true;
-        }
-        if (!isAvailable) {
-            System.out.println("Такого резюме нет");
+        int index = getIndex(r.getUuid());
+        if (index == -1) {
+            System.out.println("Резюме " + r.getUuid() + " не существует");
         } else {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].equals(r)) storage[i] = r;
-            }
+            storage[index] = r;
         }
     }
 
     public Resume get(String uuid) {
-        boolean isAvailable = false;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) isAvailable = true;
+        int index = getIndex(uuid);
+        if (index == -1) {
+            System.out.println("Такого резюме нет.");
+            return null;
         }
-
-        if (!isAvailable) {
-            System.out.println("Извините, указаный UUID: " + uuid + " не найден");
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid)) return storage[i];
-            }
-        }
-        return null;
+        return storage[index];
     }
 
     public void delete(String uuid) {
         //TODO check for availability
-        boolean isAvailable = false;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) isAvailable = true;
-        }
-
-        if (!isAvailable) {
+        int index = getIndex(uuid);
+        if (index == -1) {
             System.out.println("Такого резюме нет.");
         } else {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    storage[i] = storage[size - 1];
-                    storage[size - 1] = null;
-                    size--;
-                }
-            }
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
@@ -106,5 +70,14 @@ public class ArrayStorage {
 
     public int size() {
         return size;
+    }
+
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
