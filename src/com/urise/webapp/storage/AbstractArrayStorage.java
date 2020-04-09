@@ -16,6 +16,13 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
+    public void clear() {
+        Arrays.fill(storage,0, size, null);
+        size = 0;
+    }
+
+    public abstract void save(Resume r);
+
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index == -1) {
