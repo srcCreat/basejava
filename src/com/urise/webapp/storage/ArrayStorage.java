@@ -9,11 +9,6 @@ import java.util.Arrays;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-//    public void clear() {
-//        Arrays.fill(storage,0, size, null);
-//        size = 0;
-//    }
-
     public void save(Resume r) {
         //TODO check to repeat
         if (getIndex(r.getUuid()) != -1) {
@@ -51,13 +46,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
-    }
-
-//    public int size() {
-//        return size;
-//    }
 
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
