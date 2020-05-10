@@ -11,7 +11,7 @@ public interface Storage {
 
     void clear();
 
-    void save(Resume r);
+    void save(Resume r) throws SecurityException;
 
     void update(Resume r);
 
