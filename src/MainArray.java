@@ -1,25 +1,18 @@
-package com.urise.webapp;
-
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.SortedArrayStorage;
-import com.urise.webapp.storage.Storage;
+import com.urise.webapp.storage.ArrayStorage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * Interactive test for com.urise.webapp.storage.ArrayStorage implementation
- * (just run, no need to understand)
- */
 public class MainArray {
-    private final static Storage ARRAY_STORAGE = new SortedArrayStorage();
+    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | save uuid | delete uuid | get uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | save uuid | delete uuid | get uuid | update uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
@@ -37,12 +30,15 @@ public class MainArray {
                     System.out.println(ARRAY_STORAGE.size());
                     break;
                 case "save":
-                    r = new Resume(uuid);
+                    r = new Resume();
+                    r.setUuid(uuid);
                     ARRAY_STORAGE.save(r);
                     printAll();
                     break;
                 case "update":
-                    ARRAY_STORAGE.update(ARRAY_STORAGE.get(uuid));
+                    r = new Resume();
+                    r.setUuid(uuid);
+                    ARRAY_STORAGE.update(r);
                     printAll();
                     break;
                 case "delete":
@@ -65,7 +61,7 @@ public class MainArray {
         }
     }
 
-    private static void printAll() {
+    static void printAll() {
         Resume[] all = ARRAY_STORAGE.getAll();
         System.out.println("----------------------------");
         if (all.length == 0) {
