@@ -10,46 +10,46 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     protected Object getSearchKey(String uuid) {
-        return null;
+        return map.get(uuid);
     }
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-
+        map.put((String) searchKey, r);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-
+        map.put((String) searchKey, r);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return false;
+        return searchKey != null;
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-
+        map.remove((String) searchKey);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return null;
+        return map.get((String) searchKey);
     }
 
     @Override
     public void clear() {
-
+        map.clear();
     }
 
     @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        return map.values().toArray(new Resume[map.size()]);
     }
 
     @Override
     public int size() {
-        return 0;
+        return map.size();
     }
 }
