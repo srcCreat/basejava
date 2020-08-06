@@ -15,7 +15,7 @@ public class MainFile {
             throw new RuntimeException("Error", e);
         }
 
-        File dir = new File("./src/com/urise/webapp");
+        File dir = new File("./src/com/urise");
         System.out.println(dir.isDirectory());
         String[] list = dir.list();
         if (list != null) {
@@ -30,19 +30,19 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        printDirectoryDeeply(dir);
+        printDirectoryDeeply(dir, "");
     }
 
-    public static void printDirectoryDeeply(File dir) {
+    public static void printDirectoryDeeply(File dir, String offset) {
         File[] files = dir.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println("File: " + file.getName());
+                    System.out.println(offset + "File: " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println("Directory: " + file.getName());
-                    printDirectoryDeeply(file);
+                    System.out.println(offset + "Directory: " + file.getName());
+                    printDirectoryDeeply(file, offset + "  ");
                 }
             }
         }
