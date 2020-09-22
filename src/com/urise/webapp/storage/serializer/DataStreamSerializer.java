@@ -21,6 +21,14 @@ public class DataStreamSerializer implements StreamSerializer {
             }
             //TODO implements section
         }
+//        try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
+//            Map<SectionType, Section> sectionMap = r.getSections();
+//            oos.writeInt(sectionMap.size());
+//            for (Map.Entry<SectionType, Section> entry : sectionMap.entrySet()) {
+//                oos.writeUTF(entry.getKey().name());
+//                oos.writeObject(entry.getValue());
+//            }
+//        }
     }
 
     @Override
@@ -34,6 +42,13 @@ public class DataStreamSerializer implements StreamSerializer {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
             //TODO implements section
+//            try (ObjectInputStream ois = new ObjectInputStream(is)) {
+//                SectionType sectionType = SectionType.valueOf(ois.readUTF());
+//                Section section = (Section) ois.readObject();
+//                resume.addSection(sectionType, section);
+//            } catch (ClassNotFoundException e) {
+//                throw new StorageException("Read error");
+//            }
             return resume;
         }
     }
